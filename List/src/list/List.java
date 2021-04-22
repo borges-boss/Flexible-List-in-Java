@@ -24,11 +24,11 @@ public class List<T> {
             return (T) element;
         }
 
-        public void setProx(Cell c) {
+        public void setNext(Cell c) {
             this.prox = c;
         }
 
-        public Cell getProx() {
+        public Cell getNext() {
             return this.prox;
         }
 
@@ -48,22 +48,22 @@ public class List<T> {
     }
 
     public void add(Object value) { //final
-        ultimo.setProx(new Cell(value));
-        ultimo = ultimo.getProx();
+        ultimo.setNext(new Cell(value));
+        ultimo = ultimo.getNext();
         size++;
     }
 
     public void addAtStart(Object value) {
-        Cell tmp = primeiro.getProx();
+        Cell tmp = primeiro.getNext();
 
-        primeiro.setProx(new Cell(value));
-        primeiro.getProx().setProx(tmp);
+        primeiro.setNext(new Cell(value));
+        primeiro.getNext().setNext(tmp);
         size++;
     }
 
     public void add(int index, Object value) {
 
-        Cell tmp = primeiro.getProx();
+        Cell tmp = primeiro.getNext();
         Cell ant = tmp;
         int count = 0;
 
@@ -71,14 +71,14 @@ public class List<T> {
 
             if (index == count) {
                 Cell cell = new Cell(value);
-                cell.setProx(tmp);
-                ant.setProx(cell);
+                cell.setNext(tmp);
+                ant.setNext(cell);
                 size++;
                 break;
             }
 
             ant = tmp;
-            tmp = tmp.getProx();
+            tmp = tmp.getNext();
             count++;
         }
 
@@ -86,7 +86,7 @@ public class List<T> {
 
     public void set(int index, Object value) {
 
-        Cell tmp = primeiro.getProx();
+        Cell tmp = primeiro.getNext();
         int count = 0;
 
         while (tmp != null) {
@@ -96,7 +96,7 @@ public class List<T> {
                 break;
             }
 
-            tmp = tmp.getProx();
+            tmp = tmp.getNext();
             count++;
         }
 
@@ -105,7 +105,7 @@ public class List<T> {
     public T get(int index) {
 
         int count = 0;
-        Cell tmp = primeiro.getProx();
+        Cell tmp = primeiro.getNext();
         Object value = null;
 
         while (tmp != null) {
@@ -115,7 +115,7 @@ public class List<T> {
                 return (T) value;
             }
 
-            tmp = tmp.getProx();
+            tmp = tmp.getNext();
             count++;
         }
 
@@ -127,23 +127,23 @@ public class List<T> {
         Cell tmp = primeiro;
         Object itemRemoved = null;
 
-        if (index == 0 && tmp.getProx() != null) {
-            itemRemoved = (T) tmp.getProx().getElement();
-            tmp.setProx(tmp.getProx().getProx());
+        if (index == 0 && tmp.getNext() != null) {
+            itemRemoved = (T) tmp.getNext().getElement();
+            tmp.setNext(tmp.getNext().getNext());
             size--;
             return (T) itemRemoved;
-        } else if (index != 0 && tmp.getProx() != null) {
+        } else if (index != 0 && tmp.getNext() != null) {
 
             for (int i = 0; i <= index; i++) {
 
-                if (tmp.getProx() != null && i == index) {
-                    itemRemoved = (T) tmp.getProx().getElement();
-                    tmp.setProx(tmp.getProx().getProx());
+                if (tmp.getNext() != null && i == index) {
+                    itemRemoved = (T) tmp.getNext().getElement();
+                    tmp.setNext(tmp.getNext().getNext());
                     size--;
                     return (T) itemRemoved;
                 }
 
-                tmp = tmp.getProx();
+                tmp = tmp.getNext();
             }
         }
 
@@ -152,10 +152,10 @@ public class List<T> {
 
     public T removeAtStart() {
 
-        if (primeiro.getProx() != null) {
-            Cell tmp = primeiro.getProx().getProx();
-            Object returnElement = (T) primeiro.getProx().getElement();
-            primeiro.setProx(tmp);
+        if (primeiro.getNext() != null) {
+            Cell tmp = primeiro.getNext().getNext();
+            Object returnElement = (T) primeiro.getNext().getElement();
+            primeiro.setNext(tmp);
             size--;
             return (T) returnElement;
         } else {
@@ -171,9 +171,9 @@ public class List<T> {
 
         while (tmp != null) {
 
-            if (tmp.getProx() == null && tmp.equals(ultimo)) {
+            if (tmp.getNext() == null && tmp.equals(ultimo)) {
                 returnElement = tmp.getElement();
-                ant.setProx(null);
+                ant.setNext(null);
                 ultimo = null;
                 ultimo = ant;
                 size--;
@@ -182,7 +182,7 @@ public class List<T> {
             }
 
             ant = tmp;
-            tmp = tmp.getProx();
+            tmp = tmp.getNext();
 
         }
 
