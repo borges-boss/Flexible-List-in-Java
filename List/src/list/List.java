@@ -5,7 +5,7 @@ public class List<T> {
     private class Cell<T> {
 
         private Object element;
-        private Cell prox;
+        private Cell next;
 
         public Cell() {
             this.element = null;
@@ -13,7 +13,7 @@ public class List<T> {
 
         public Cell(Object element) {
             this.element = (T) element;
-            this.prox = null;
+            this.next = null;
         }
 
         public void setElement(Object element) {
@@ -25,22 +25,21 @@ public class List<T> {
         }
 
         public void setNext(Cell c) {
-            this.prox = c;
+            this.next = c;
         }
 
         public Cell getNext() {
-            return this.prox;
+            return this.next;
         }
 
     }
 
-    private Cell< T> primeiro,
-            ultimo;
+    private Cell< T> first, last;
     private int size = 0;
 
     public List() {
-        primeiro = new Cell();
-        ultimo = primeiro;
+        first = new Cell();
+        last = first;
     }
 
     public int size() {
@@ -48,22 +47,22 @@ public class List<T> {
     }
 
     public void add(Object value) { //final
-        ultimo.setNext(new Cell(value));
-        ultimo = ultimo.getNext();
+        last.setNext(new Cell(value));
+        last = last.getNext();
         size++;
     }
 
     public void addAtStart(Object value) {
-        Cell tmp = primeiro.getNext();
+        Cell tmp = first.getNext();
 
-        primeiro.setNext(new Cell(value));
-        primeiro.getNext().setNext(tmp);
+        first.setNext(new Cell(value));
+        first.getNext().setNext(tmp);
         size++;
     }
 
     public void add(int index, Object value) {
 
-        Cell tmp = primeiro.getNext();
+        Cell tmp = first.getNext();
         Cell ant = tmp;
         int count = 0;
 
@@ -86,7 +85,7 @@ public class List<T> {
 
     public void set(int index, Object value) {
 
-        Cell tmp = primeiro.getNext();
+        Cell tmp = first.getNext();
         int count = 0;
 
         while (tmp != null) {
@@ -105,7 +104,7 @@ public class List<T> {
     public T get(int index) {
 
         int count = 0;
-        Cell tmp = primeiro.getNext();
+        Cell tmp = first.getNext();
         Object value = null;
 
         while (tmp != null) {
@@ -124,7 +123,7 @@ public class List<T> {
 
     public T remove(int index) {
 
-        Cell tmp = primeiro;
+        Cell tmp = first;
         Object itemRemoved = null;
 
         if (index == 0 && tmp.getNext() != null) {
@@ -152,30 +151,30 @@ public class List<T> {
 
     public T removeAtStart() {
 
-        if (primeiro.getNext() != null) {
-            Cell tmp = primeiro.getNext().getNext();
-            Object returnElement = (T) primeiro.getNext().getElement();
-            primeiro.setNext(tmp);
+        if (first.getNext() != null) {
+            Cell tmp = first.getNext().getNext();
+            Object returnElement = (T) first.getNext().getElement();
+            first.setNext(tmp);
             size--;
             return (T) returnElement;
         } else {
-            return (T) primeiro.getElement();
+            return (T) first.getElement();
         }
     }
 
     public T removeAtEnd() {
 
-        Cell tmp = primeiro;
-        Cell ant = primeiro;
+        Cell tmp = first;
+        Cell ant = first;
         Object returnElement = null;
 
         while (tmp != null) {
 
-            if (tmp.getNext() == null && tmp.equals(ultimo)) {
+            if (tmp.getNext() == null && tmp.equals(last)) {
                 returnElement = tmp.getElement();
                 ant.setNext(null);
-                ultimo = null;
-                ultimo = ant;
+                last = null;
+                last = ant;
                 size--;
 
                 return (T) returnElement;
